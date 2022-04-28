@@ -1,6 +1,8 @@
 import { Pause, PlayArrow, VolumeUp } from '@mui/icons-material';
 import { Grid, IconButton } from '@mui/material';
-import React from 'react';
+import React, { ChangeEvent, useEffect } from 'react';
+import { useActions } from '../hooks/UseAction';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 import styles from '../styles/Player.module.scss';
 import { ITrack } from '../types/track';
 import TrackProgress from './TrackProgress';
@@ -8,48 +10,72 @@ import TrackProgress from './TrackProgress';
 interface PlayerProps {
 
 }
+let audio
 const Player: React.FC<PlayerProps> = () => {
-  const active = false
 
-  const track: ITrack = {
-    _id: "625fee887cdbfe7d6207de28",
-    name: "name1",
-    artist: "artist1",
-    text: "text1",
-    listens: 0,
-    picture: "image/8c65f62a-a296-49a2-ac8a-e2efe2880f19.png",
-    audio: "audio/76bc3ab5-2169-496c-aeba-f7ec0c4873bc.mov",
-    comments: [],
+  const { pause, volume, active, duration, currentTime } = useTypedSelector(state => state.player)
+
+  const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setActiveTrack } = useActions()
+
+  useEffect(() => {
+    if (!audio) {
+      audio = new Audio();
+    } else {
+      setAudio();
+      onPlayTrack();
+    }
+  }, [active])
+
+  useEffect(() => {
+    if (active) {
+      pause ? audio.pause() : audio.play()
+    }
+  }, [pause, active])
+
+
+  const setAudio = () => {
+    if (active) {
+      audio.src = `http://localhost:5000/${active.audio}`;
+      audio.onloadedmetadata = () => {
+        setDuration(audio.duration);
+      }
+      audio.ontimeupdate = () => {
+        setCurrentTime(audio.currentTime);
+      }
+    }
   }
-  const stopTrack = () => {
 
+  const onStopTrack = () => {
+    pauseTrack()
   }
 
-  const playTrack = () => {
-
+  const onPlayTrack = () => {
+    playTrack()
   }
 
-  const onChangeVolume = () => {
-
+  const onChangeVolume = (e: ChangeEvent<HTMLInputElement>) => {
+    setVolume(Number(e.target.value))
+    audio.volume = Number(Number(e.target.value) / 100)
   }
 
-  const onChangeProgress = () => {
-
+  const onChangeProgress = (e: ChangeEvent<HTMLInputElement>) => {
+    setCurrentTime(Number(e.target.value))
+    audio.currentTime = Number(e.target.value)
   }
 
   return (
-    <div className={styles.player}>
-      <IconButton onClick={active ? stopTrack : playTrack}>
-        {active ? <Pause /> : <PlayArrow />}
+    !active ? null : (<div className={styles.player}>
+      <IconButton onClick={pause ? onPlayTrack : onStopTrack}>
+        {pause ? <PlayArrow /> : <Pause />}
       </IconButton>
       <Grid container direction="column" style={{ marginLeft: 20, width: 200 }}>
-        <div>{track.name}</div>
-        <div style={{ fontSize: 12, color: 'gray' }}>{track.artist}</div>
+        <div>{active?.name}</div>
+        <div style={{ fontSize: 12, color: 'gray' }}>{active?.artist}</div>
       </Grid>
-      <TrackProgress left={0} right={100} onChange={onChangeProgress} />
+      <TrackProgress formatValue={true} left={currentTime} right={duration} onChange={onChangeProgress} />
       <VolumeUp style={{ marginLeft: 'auto' }} />
-      <TrackProgress left={0} right={100} onChange={onChangeVolume} />
-    </div>
+      <TrackProgress left={volume} right={100} onChange={onChangeVolume} />
+    </div>)
   );
 };
 

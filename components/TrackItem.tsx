@@ -1,48 +1,55 @@
 import { Card, Grid, IconButton } from "@mui/material";
-import React, { SyntheticEvent } from "react";
+import React, { SyntheticEvent, useEffect } from "react";
 import { ITrack } from "../types/track";
 import styles from '../styles/TrackItem.module.scss'
 import { Delete, Pause, PlayArrow } from "@mui/icons-material";
 import { useRouter } from "next/router";
+import { useActions } from "../hooks/UseAction";
+import { useTypedSelector } from "../hooks/useTypedSelector";
 
 interface TrackItemProps {
   track: ITrack
-  active?: boolean
 }
 
-const TrackItem: React.FC<TrackItemProps> = ({ track, active = false }) => {
+const TrackItem: React.FC<TrackItemProps> = ({ track }) => {
 
-  const router = useRouter()
+  const router = useRouter();
+
+  const { playTrack, pauseTrack, setActiveTrack } = useActions()
+  const { pause, active } = useTypedSelector(state => state.player)
+
+  const test = useTypedSelector(state => state.player)
+
 
   const openTrackInfo = () => {
     router.push(`/tracks/${track._id}`)
   }
 
-  const playTrack = (e: SyntheticEvent) => {
-    e.stopPropagation()
+  const onPlay = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    (!active || track._id !== active?._id) && setActiveTrack(track);
+    playTrack();
   }
 
-  const stopTrack = (e: SyntheticEvent) => {
-    e.stopPropagation()
-
+  const onPause = (e: SyntheticEvent) => {
+    e.stopPropagation();
+    pauseTrack()
   }
 
   const deleteTrack = (e: SyntheticEvent) => {
     e.stopPropagation()
-
   }
 
   return (
     <Card className={styles.track} onClick={openTrackInfo}>
-      <IconButton onClick={active ? stopTrack : playTrack}>
-        {active ? <Pause /> : <PlayArrow />}
+      <IconButton onClick={(active && track._id === active?._id && !pause) ? onPause : onPlay}>
+        {(active && track._id === active?._id && !pause) ? <Pause /> : <PlayArrow />}
       </IconButton>
       <img alt="img" width={70} height={70} src={`http://localhost:5000/${track.picture}`} />
       <Grid container direction="column" style={{ marginLeft: 20, width: 200 }}>
         <div>{track.name}</div>
         <div style={{ fontSize: 12, color: 'gray' }}>{track.artist}</div>
       </Grid>
-      {active && <div>02:42 / 3:22</div>}
       <IconButton onClick={deleteTrack} style={{ marginLeft: "auto" }}>
         <Delete />
       </IconButton>
