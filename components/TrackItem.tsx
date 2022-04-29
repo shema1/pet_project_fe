@@ -15,7 +15,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track }) => {
 
   const router = useRouter();
 
-  const { playTrack, pauseTrack, setActiveTrack } = useActions()
+  const { playTrack, pauseTrack, setActiveTrack, removeTrack } = useActions()
   const { pause, active } = useTypedSelector(state => state.player)
 
   const test = useTypedSelector(state => state.player)
@@ -36,9 +36,12 @@ const TrackItem: React.FC<TrackItemProps> = ({ track }) => {
     pauseTrack()
   }
 
-  const deleteTrack = (e: SyntheticEvent) => {
+
+  const deleteTrack = (e: SyntheticEvent, id: string) => {
     e.stopPropagation()
+    removeTrack(id)
   }
+
 
   return (
     <Card className={styles.track} onClick={openTrackInfo}>
@@ -50,7 +53,7 @@ const TrackItem: React.FC<TrackItemProps> = ({ track }) => {
         <div>{track.name}</div>
         <div style={{ fontSize: 12, color: 'gray' }}>{track.artist}</div>
       </Grid>
-      <IconButton onClick={deleteTrack} style={{ marginLeft: "auto" }}>
+      <IconButton onClick={(e) => deleteTrack(e, track._id)} style={{ marginLeft: "auto" }}>
         <Delete />
       </IconButton>
     </Card>
