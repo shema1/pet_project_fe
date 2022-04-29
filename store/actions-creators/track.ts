@@ -26,14 +26,13 @@ export const removeTrack = (id) => {
 }
 
 
-export const createTrack = (params: CreateTrack) => {
+export const createTrack = (params: FormData, callback: () => void) => {
   return async (dispatch: Dispatch<TrackAction>) => {
     try {
-      const response = await axios.post(`http://localhost:5000/tracks/`, params, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      const response = await axios.post(`http://localhost:5000/tracks/`, params)
+        .then(response => {
+          callback()
+        })
       return dispatch({ type: TrackActionTypes.REMOVE_TRACK, payload: response.data })
     } catch (error) {
       return dispatch({ type: TrackActionTypes.GET_TRACKS_ERROR, payload: "Error" })

@@ -1,25 +1,49 @@
 import { Button, Grid, TextField } from "@mui/material";
-import { style } from "@mui/system";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import FileUpload from "../../components/FileUpload";
 import StepWrapper from "../../components/StepWrapper";
+import { useActions } from "../../hooks/UseAction";
+import { useInput } from "../../hooks/useInput";
 import MainLayout from "../../layouts/MainLayout";
 
+
+enum CREATE_FIELDS {
+  name = "name",
+  artist = "artist",
+  text = "text"
+}
 interface CreateProps {
 
 }
 
-
-
 const Create: React.FC<CreateProps> = () => {
 
   const [activeStep, setActiveStep] = useState(0)
-  const [image, setImage] = useState(null)
+  const [picture, setPicture] = useState(null)
   const [audio, setAudio] = useState(null)
-
+  const name = useInput('')
+  const artist = useInput('')
+  const text = useInput('')
+  const router = useRouter()
+  const { createTrack } = useActions()
 
   const next = () => {
-    activeStep !== 2 && setActiveStep(prev => prev + 1)
+    if (activeStep !== 2) {
+      setActiveStep(prev => prev + 1)
+    } else {
+      const formData: FormData = new FormData()
+      formData.append('name', name.value)
+      formData.append('text', text.value)
+      formData.append('artist', artist.value)
+      formData.append('picture', picture)
+      formData.append('audio', audio)
+      createTrack(formData, callback)
+    }
+  }
+
+  const callback = () => {
+    router.push('/tracks')
   }
 
   const back = () => {
@@ -32,14 +56,17 @@ const Create: React.FC<CreateProps> = () => {
         {activeStep === 0 &&
           <Grid container direction={"column"} style={{ padding: 20 }}>
             <TextField
+              {...name}
               style={{ marginTop: 10 }}
               label="Track name"
             />
             <TextField
+              {...artist}
               style={{ marginTop: 10 }}
               label="Author"
             />
             <TextField
+              {...text}
               style={{ marginTop: 10 }}
               label="Text"
               multiline
@@ -48,7 +75,7 @@ const Create: React.FC<CreateProps> = () => {
           </Grid>
         }
         {activeStep === 1 &&
-          <FileUpload setFile={setImage} accept="image/*">
+          <FileUpload setFile={setPicture} accept="image/*">
             <Button>Upload image</Button>
           </FileUpload>
         }

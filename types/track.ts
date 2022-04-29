@@ -28,8 +28,8 @@ export interface CreateTrack {
   name: string;
   artist: string;
   text: string;
-  picture: any;
-  audio: any;
+  picture: any | null;
+  audio: any | null;
 }
 interface getTracksAction {
   type: TrackActionTypes.GET_TRACKS;
