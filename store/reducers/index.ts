@@ -2,10 +2,12 @@ import { AnyAction, combineReducers } from "redux";
 import { playerReducer } from "./playerReducer";
 import { HYDRATE } from "next-redux-wrapper";
 import { trackReducer } from "./trackReducer";
+import { authReducer } from "./authReducer";
 
 const rootReducer = combineReducers({
   player: playerReducer,
-  track: trackReducer
+  track: trackReducer,
+  auth: authReducer
 })
 
 export const reducer = (state, action: AnyAction) => {

@@ -24,6 +24,10 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     router.back()
   }
 
+  useEffect(() => {
+    console.log("router.asPath", router.asPath)
+  }),[]
+
 
   const addComment = async () => {
     try {

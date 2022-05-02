@@ -7,6 +7,7 @@ import logger from "redux-logger";
 import { configureStore } from '@reduxjs/toolkit'
 import { playerReducer } from "./reducers/playerReducer";
 import { trackReducer } from "./reducers/trackReducer";
+import { authReducer } from "./reducers/authReducer";
 
 // const makeStore: MakeStore<Store<RootState>>
 //   = (context: Context) => createStore(reducer, applyMiddleware(logger));
@@ -15,7 +16,8 @@ const makeStore: MakeStore<Store<RootState>>
   = (context: Context) => configureStore({
     reducer: {
       player: playerReducer,
-      track: trackReducer
+      track: trackReducer,
+      auth: authReducer
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
     devTools: process.env.NODE_ENV !== 'production',
