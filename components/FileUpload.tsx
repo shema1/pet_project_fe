@@ -20,7 +20,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ setFile, accept, children }) =>
   }
 
   return (
-    <div onClick={onClick}>
+    <div onClick={onClick} style={{ height: "100%" }}>
       <input type="file"
         onChange={onChangeImage}
         accept={accept}

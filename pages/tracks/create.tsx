@@ -1,12 +1,13 @@
 import { Button, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import FileUpload from "../../components/FileUpload";
 import StepWrapper from "../../components/StepWrapper";
 import { useActions } from "../../hooks/UseAction";
 import { useInput } from "../../hooks/useInput";
 import MainLayout from "../../layouts/MainLayout";
-
+import { Image } from '@mui/icons-material';
+import { height } from "@mui/system";
 
 enum CREATE_FIELDS {
   name = "name",
@@ -46,6 +47,10 @@ const Create: React.FC<CreateProps> = () => {
     router.push('/tracks')
   }
 
+  useEffect(() => {
+    console.log("audio", audio)
+  }, [audio])
+
   const back = () => {
     setActiveStep(prev => prev - 1)
   }
@@ -76,12 +81,19 @@ const Create: React.FC<CreateProps> = () => {
         }
         {activeStep === 1 &&
           <FileUpload setFile={setPicture} accept="image/*">
-            <Button>Upload image</Button>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%" }}>
+              {!picture && <Image style={{ fontSize: 50 }} />}
+              {picture && <img alt="img" width={200} height={200} src={URL.createObjectURL(picture)} />}
+              <Button>Upload image</Button>
+            </div>
           </FileUpload>
         }
         {activeStep === 2 &&
           <FileUpload setFile={setAudio} accept="audio/*">
-            <Button>Upload Track</Button>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%" }}>
+              {audio && <p>{audio.name}</p>}
+              <Button>Upload Track</Button>
+            </div>
           </FileUpload>
         }
       </StepWrapper>
