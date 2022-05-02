@@ -23,6 +23,9 @@ export enum TrackActionTypes {
   GET_TRACKS = 'GET_TRACKS',
   GET_TRACKS_LOADING = 'GET_TRACKS_LOADING',
   GET_TRACKS_ERROR = 'GET_TRACKS_ERROR',
+  GET_TRACK = 'GET_TRACK',
+  GET_TRACK_LOADING = 'GET_TRACK_LOADING',
+  GET_TRACK_ERROR = 'GET_TRACK_ERROR',
   REMOVE_TRACK = 'REMOVE_TRACK',
   REMOVE_TRACK_LOADING = 'REMOVE_TRACK_LOADING',
   CREATE_TRACK = 'CREATE_TRACK'
@@ -45,11 +48,25 @@ interface getTracksLoadingAction {
   type: TrackActionTypes.GET_TRACKS_LOADING;
   payload: boolean;
 }
+
 interface getTracksErrorAction {
   type: TrackActionTypes.GET_TRACKS_ERROR;
   payload: string;
 }
+interface getTrackAction {
+  type: TrackActionTypes.GET_TRACK;
+  payload: ITrack;
+}
 
+interface getTrackErrorAction {
+  type: TrackActionTypes.GET_TRACK_ERROR;
+  payload: string;
+}
+
+interface getTrackLoadingAction {
+  type: TrackActionTypes.GET_TRACK_LOADING;
+  payload: boolean;
+}
 interface removeTrackAction {
   type: TrackActionTypes.REMOVE_TRACK;
   payload: string;
@@ -65,9 +82,13 @@ interface createTrackAction {
 }
 
 
+
 export type TrackAction =
   getTracksAction
   | getTracksLoadingAction
+  | getTrackAction
+  | getTrackLoadingAction
+  | getTrackErrorAction
   | getTracksErrorAction
   | removeTrackAction
   | removeTrackLoadingAction

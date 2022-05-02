@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { CreateTrack, ITrack, TrackAction, TrackActionTypes } from "../../types/track";
+import { TrackAction, TrackActionTypes } from "../../types/track";
 import axios from "axios";
 
 
@@ -11,6 +11,18 @@ export const getTracks = () => {
       return dispatch({ type: TrackActionTypes.GET_TRACKS, payload: response.data })
     } catch (error) {
       return dispatch({ type: TrackActionTypes.GET_TRACKS_ERROR, payload: "Error" })
+    }
+  }
+}
+
+export const getTrack = (id) => {
+  return async (dispatch: Dispatch<TrackAction>) => {
+    try {
+      dispatch({ type: TrackActionTypes.GET_TRACK_LOADING, payload: true })
+      const response = await axios.get(`http://localhost:5000/tracks/${id}`)
+      return dispatch({ type: TrackActionTypes.GET_TRACK, payload: response.data })
+    } catch (error) {
+      return dispatch({ type: TrackActionTypes.GET_TRACK_ERROR, payload: "Error" })
     }
   }
 }
@@ -31,10 +43,9 @@ export const createTrack = (params: FormData, callback: () => void) => {
   return async (dispatch: Dispatch<TrackAction>) => {
     try {
       const response = await axios.post(`http://localhost:5000/tracks/`, params)
-        .then(response => {
+        .then(() => {
           callback()
         })
-      return dispatch({ type: TrackActionTypes.REMOVE_TRACK, payload: response.data })
     } catch (error) {
       return dispatch({ type: TrackActionTypes.GET_TRACKS_ERROR, payload: "Error" })
     }

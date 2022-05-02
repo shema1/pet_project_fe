@@ -4,7 +4,6 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { useActions } from '../hooks/UseAction';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import styles from '../styles/Player.module.scss';
-import { ITrack } from '../types/track';
 import TrackProgress from './TrackProgress';
 
 interface PlayerProps {
