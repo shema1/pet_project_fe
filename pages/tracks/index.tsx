@@ -8,14 +8,19 @@ import { useActions } from "../../hooks/UseAction";
 import { useTypedSelector } from "../../hooks/useTypedSelector";
 import MainLayout from "../../layouts/MainLayout";
 import { RootState } from '../../store/reducers';
-
+import _ from "lodash"
+import { TrackActionTypes } from "../../types/track";
 const Tracks: NextPage<RootState> = () => {
 
   const router = useRouter();
 
   const { getTracks } = useActions()
 
-  const { tracks } = useTypedSelector(state => state.track);
+  const { tracks, trackLoading } = useTypedSelector(state => state.track);
+
+  const isLoadingTracks = _.get(trackLoading, TrackActionTypes.GET_TRACKS_LOADING)
+  const isLoadingDeleteTrack = _.get(trackLoading, TrackActionTypes.REMOVE_TRACK_LOADING)
+
 
   const onClickAddTrack = () => {
     router.push('/tracks/create')
@@ -35,7 +40,7 @@ const Tracks: NextPage<RootState> = () => {
               <Button onClick={onClickAddTrack}>Add track</Button>
             </Grid>
           </Box>
-          <TrackList tracks={tracks} />
+          <TrackList tracks={tracks} loading={isLoadingTracks || isLoadingDeleteTrack} />
         </Card>
       </Grid>
     </MainLayout>

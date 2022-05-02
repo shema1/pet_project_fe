@@ -22,7 +22,8 @@ interface PlayAction {
 }
 
 interface PauseAction {
-  type: PlayerActionTypes.PAUSE
+  type: PlayerActionTypes.PAUSE,
+  payload: number
 }
 
 interface SetActiveAction {

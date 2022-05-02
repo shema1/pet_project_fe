@@ -12,7 +12,7 @@ const MainLayout: React.FC<MainLayoutType> = ({ children }) => {
   return (
     <>
       <NavBar />
-      <Container style={{ marginTop: 120 }}>
+      <Container style={{ marginTop: 120, height: 'calc(100vh - 120px)' }}>
         {children}
       </Container>
       <Player />

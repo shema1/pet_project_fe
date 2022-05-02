@@ -1,16 +1,20 @@
-import { Box, Grid } from "@mui/material";
-import React from "react";
+import { Box, CircularProgress, Grid } from "@mui/material";
+import React, { useEffect } from "react";
 import { ITrack } from "../types/track";
 import TrackItem from "./TrackItem";
 
 interface TrackListProps {
-  tracks: ITrack[]
+  tracks: ITrack[];
+  loading?: boolean
 }
 
-const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
-  
+const TrackList: React.FC<TrackListProps> = ({ tracks, loading }) => {
+
+  useEffect(() => {
+    console.log("loading", loading)
+  }, [loading])
   return (
-    <Grid container direction="column">
+    <Grid container direction="column" style={{ position: "relative", height: "60%" }}>
       <Box>
         {tracks.map(track =>
           <TrackItem
@@ -19,6 +23,9 @@ const TrackList: React.FC<TrackListProps> = ({ tracks }) => {
           />
         )}
       </Box>
+      {loading && <div style={{ position: "absolute", backgroundColor: "#00000030", width: "100%", height: "100%" }}>
+        <CircularProgress style={{ marginLeft: "47%", marginTop: 100 }} />
+      </div>}
     </Grid>
   )
 }
