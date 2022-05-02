@@ -11,7 +11,7 @@ const initState: PlayerState = {
 export const playerReducer = (state = initState, action: PlayerAction): PlayerState => {
   switch (action.type) {
     case PlayerActionTypes.PAUSE:
-      return { ...state, pause: true, duration: action.payload }
+      return { ...state, pause: true }
     case PlayerActionTypes.PLAY:
       return { ...state, pause: false }
     case PlayerActionTypes.SET_ACTIVE:

@@ -18,9 +18,6 @@ const TrackItem: React.FC<TrackItemProps> = ({ track }) => {
   const { playTrack, pauseTrack, setActiveTrack, removeTrack } = useActions()
   const { pause, active } = useTypedSelector(state => state.player)
 
-  const test = useTypedSelector(state => state.player)
-
-
   const openTrackInfo = () => {
     router.push(`/tracks/${track._id}`)
   }

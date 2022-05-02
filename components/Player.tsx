@@ -17,12 +17,13 @@ const Player: React.FC<PlayerProps> = () => {
 
   const { pauseTrack, playTrack, setVolume, setCurrentTime, setDuration, setActiveTrack } = useActions()
 
+
   useEffect(() => {
     if (!audio) {
       audio = new Audio();
     } else {
       setAudio();
-      onPlayTrack();
+      active && onPlayTrack();
     }
   }, [active])
 
