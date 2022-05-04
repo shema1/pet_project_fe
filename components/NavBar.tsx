@@ -18,6 +18,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { useRouter } from "next/router";
+import { Button } from '@mui/material';
+import { useActions } from '../hooks/useAction';
 
 
 const menuItems = [
@@ -29,6 +31,7 @@ const menuItems = [
 export default function NavBar() {
   const [open, setOpen] = React.useState(false);
   const router = useRouter()
+  const { logout } = useActions()
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -37,6 +40,13 @@ export default function NavBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const onLogout = () => {
+    logout()
+    router.push({
+      pathname: '/login'
+    })
+  }
 
   return (
     <div>
@@ -53,6 +63,9 @@ export default function NavBar() {
           <Typography variant="h6" noWrap component="div">
             Persistent drawer
           </Typography>
+          <Button style={{ marginLeft: "auto", color: " #fff" }} onClick={onLogout}>
+            Log out
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -62,11 +75,11 @@ export default function NavBar() {
       >
         <div>
           <IconButton onClick={handleDrawerClose}>
-             <ChevronLeftIcon /> 
+            <ChevronLeftIcon />
           </IconButton>
         </div>
         <List>
-        {menuItems.map(({ text, href }, index) => (
+          {menuItems.map(({ text, href }, index) => (
             <ListItem button key={href} onClick={() => router.push(href)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}

@@ -4,7 +4,7 @@ import { HYDRATE } from "next-redux-wrapper";
 import { trackReducer } from "./trackReducer";
 import { authReducer } from "./authReducer";
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   player: playerReducer,
   track: trackReducer,
   auth: authReducer
