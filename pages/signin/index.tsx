@@ -6,57 +6,55 @@ import { useActions } from "../../hooks/useAction";
 import { useInput } from "../../hooks/useInput";
 import styles from '../../styles/Login.module.scss';
 
-
-const Login: NextPage = () => {
-
+const SigninPage: NextPage = () => {
   const router = useRouter();
   const email = useInput("")
+  const name = useInput("")
   const password = useInput("")
 
-  const { login } = useActions()
+  const { registration } = useActions()
 
 
   const callback = () => {
     router.push({
-      pathname: '/'
+      pathname: '/login'
     });
-  }
-
-  const onLogin = () => {
-    login({ email: email.value, password: password.value }, callback)
   }
 
   const onSignIn = () => {
-    router.push({
-      pathname: '/signin'
-    });
+    registration({ email: email.value, password: password.value, name: name.value }, callback)
   }
 
   return (
     <div className={styles.container}>
       <div className={styles.app}>
         <form className={styles.form}>
-          <h1>Login</h1>
+          <h1>Sign in</h1>
           <TextField
             {...email}
             style={{ marginTop: 10 }}
             label="Email"
           />
           <TextField
+            {...name}
+            style={{ marginTop: 10 }}
+            label="Name"
+          />
+          <TextField
             {...password}
             style={{ marginTop: 10 }}
             label="Password"
           />
-          <Button variant="contained" style={{ marginTop: 20 }} onClick={onLogin}>
-            Log in
-          </Button>
-          <Button onClick={onSignIn}>
+          <Button variant="contained" style={{marginTop: 20}} onClick={onSignIn}>
             Sign in
+          </Button>
+          <Button onClick={callback}>
+            login
           </Button>
         </form>
       </div >
-    </div >
+    </div>
   );
-}
+};
 
-export default Login
+export default SigninPage;

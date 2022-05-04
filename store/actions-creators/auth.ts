@@ -1,7 +1,8 @@
 import { Dispatch } from "react";
 import axios from "axios";
-import { AuthAction, AuthActionTypes, ILogin } from "../../types/auth";
+import { AuthAction, AuthActionTypes, ILogin, ISignIn } from "../../types/auth";
 import handleError from "../../services/handleError";
+import { toast } from 'react-toastify';
 
 
 
@@ -13,7 +14,18 @@ export const login = (params: ILogin, callback: () => void) => {
       return dispatch({ type: AuthActionTypes.LOGIN, payload: response.data })
     } catch (error) {
       handleError(error.message)
-      console.log("error", error)
+    }
+  }
+}
+
+export const registration = (params: ISignIn, callback: () => void) => {
+  return async () => {
+    try {
+      await axios.post('http://localhost:5000/auth/registration', params)
+      toast.success("Success");
+      callback()
+    } catch (error) {
+      handleError(error.message)
     }
   }
 }
