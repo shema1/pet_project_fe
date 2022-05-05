@@ -3,7 +3,8 @@ import { IUser } from "./user"
 
 export interface AuthState {
   isLogin: boolean,
-  currentUser: IUser
+  currentUser: IUser,
+  access_token: string
 }
 
 
@@ -26,7 +27,7 @@ export enum AuthActionTypes {
 
 interface LoginAction {
   type: AuthActionTypes.LOGIN
-  payload: IUser
+  payload: string
 }
 
 interface SigninAction {

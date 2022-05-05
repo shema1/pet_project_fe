@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import { TrackAction, TrackActionTypes } from "../../types/track";
 import axios from "axios";
+import handleError from "../../services/handleError";
 
 
 export const getTracks = () => {
@@ -10,6 +11,7 @@ export const getTracks = () => {
       const response = await axios.get('http://localhost:5000/tracks')
       return dispatch({ type: TrackActionTypes.GET_TRACKS, payload: response.data })
     } catch (error) {
+      handleError(error.message)
       return dispatch({ type: TrackActionTypes.GET_TRACKS_ERROR, payload: "Error" })
     }
   }
@@ -22,6 +24,7 @@ export const getTrack = (id) => {
       const response = await axios.get(`http://localhost:5000/tracks/${id}`)
       return dispatch({ type: TrackActionTypes.GET_TRACK, payload: response.data })
     } catch (error) {
+      handleError(error.message)
       return dispatch({ type: TrackActionTypes.GET_TRACK_ERROR, payload: "Error" })
     }
   }

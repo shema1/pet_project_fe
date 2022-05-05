@@ -8,10 +8,12 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import configAxios  from '../services/configAxios';
 
 const WrappedApp: FC<AppProps> = ({ Component, pageProps }) => {
-
+    
     const store = useStore(pageProps.initialReduxState)
+    configAxios(store)
     const persistor = persistStore(store, {}, function () {
         persistor.persist()
     })
