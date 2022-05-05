@@ -47,10 +47,6 @@ const Create: React.FC<CreateProps> = () => {
     router.push('/tracks')
   }
 
-  useEffect(() => {
-    console.log("audio", audio)
-  }, [audio])
-
   const back = () => {
     setActiveStep(prev => prev - 1)
   }

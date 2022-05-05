@@ -8,7 +8,6 @@ const configAxios = (store) => {
     axios.defaults.headers.common['Content-Type'] = 'application/json; charset=utf-8';
     //axios.defaults.headers.common.Pragma = 'no-cache';
 
-    console.log("work")
     axios.interceptors.request.use(async config => {
         //   if (config.url !== endpoints.signIn() && config.url !== endpoints.refreshtoken() && RefreshTokenService.isRefreshing) {
         //       await RefreshTokenService.addNewPromise();

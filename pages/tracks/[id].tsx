@@ -24,9 +24,7 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
     router.back()
   }
 
-  useEffect(() => {
-    console.log("router.asPath", router.asPath)
-  }),[]
+
 
 
   const addComment = async () => {
@@ -91,7 +89,6 @@ const TrackPage: React.FC<TrackPageProps> = ({ serverTrack }) => {
 export default TrackPage
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  console.log("params.id", params.id)
   const response = await axios.get(`http://localhost:5000/tracks/${params.id}`)
   return {
     props: {

@@ -13,7 +13,7 @@ export const login = (params: ILogin, callback: () => void) => {
       callback()
       return dispatch({ type: AuthActionTypes.LOGIN, payload: response.data.access_token })
     } catch (error) {
-      handleError(error.message)
+      handleError(error)
     }
   }
 }
@@ -25,7 +25,7 @@ export const registration = (params: ISignIn, callback: () => void) => {
       toast.success("Success");
       callback()
     } catch (error) {
-      handleError(error.message)
+      handleError(error)
     }
   }
 }

@@ -10,9 +10,6 @@ interface TrackListProps {
 
 const TrackList: React.FC<TrackListProps> = ({ tracks, loading }) => {
 
-  useEffect(() => {
-    console.log("loading", loading)
-  }, [loading])
   return (
     <Grid container direction="column" style={{ position: "relative", height: "60%" }}>
       <Box>
