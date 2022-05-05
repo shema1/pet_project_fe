@@ -6,7 +6,7 @@ import { useActions } from "../../hooks/useAction";
 import { useInput } from "../../hooks/useInput";
 import styles from '../../styles/Login.module.scss';
 
-const SigninPage: NextPage = () => {
+const SignupPage: NextPage = () => {
   const router = useRouter();
   const email = useInput("")
   const name = useInput("")
@@ -29,7 +29,7 @@ const SigninPage: NextPage = () => {
     <div className={styles.container}>
       <div className={styles.app}>
         <form className={styles.form}>
-          <h1>Sign in</h1>
+          <h1>Sign up</h1>
           <TextField
             {...email}
             style={{ marginTop: 10 }}
@@ -46,7 +46,7 @@ const SigninPage: NextPage = () => {
             label="Password"
           />
           <Button variant="contained" style={{marginTop: 20}} onClick={onSignIn}>
-            Sign in
+            Sign up
           </Button>
           <Button onClick={callback}>
             login
@@ -57,4 +57,4 @@ const SigninPage: NextPage = () => {
   );
 };
 
-export default SigninPage;
+export default SignupPage;

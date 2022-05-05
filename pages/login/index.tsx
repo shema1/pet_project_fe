@@ -26,9 +26,9 @@ const Login: NextPage = () => {
     login({ email: email.value, password: password.value }, callback)
   }
 
-  const onSignIn = () => {
+  const onSignUp = () => {
     router.push({
-      pathname: '/signin'
+      pathname: '/signup'
     });
   }
 
@@ -50,8 +50,8 @@ const Login: NextPage = () => {
           <Button variant="contained" style={{ marginTop: 20 }} onClick={onLogin}>
             Log in
           </Button>
-          <Button onClick={onSignIn}>
-            Sign in
+          <Button onClick={onSignUp}>
+            Sign up
           </Button>
         </form>
       </div >

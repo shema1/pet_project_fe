@@ -13,7 +13,7 @@ export interface ILogin {
   password: string
 }
 
-export interface ISignIn {
+export interface ISignUp {
   email: string;
   name: string;
   password: string
@@ -22,7 +22,7 @@ export interface ISignIn {
 export enum AuthActionTypes {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
-  SIGNIN = "SIGNIN"
+  SIGNUP = "SIGNUP"
 }
 
 interface LoginAction {
@@ -30,8 +30,8 @@ interface LoginAction {
   payload: string
 }
 
-interface SigninAction {
-  type: AuthActionTypes.SIGNIN
+interface SignupAction {
+  type: AuthActionTypes.SIGNUP
   payload: IUser
 }
 
@@ -39,4 +39,4 @@ interface LogoutAction {
   type: AuthActionTypes.LOGOUT
 }
 
-export type AuthAction = LoginAction | LogoutAction | SigninAction
+export type AuthAction = LoginAction | LogoutAction | SignupAction

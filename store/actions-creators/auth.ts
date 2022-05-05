@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import axios from "axios";
-import { AuthAction, AuthActionTypes, ILogin, ISignIn } from "../../types/auth";
+import { AuthAction, AuthActionTypes, ILogin, ISignUp } from "../../types/auth";
 import handleError from "../../services/handleError";
 import { toast } from 'react-toastify';
 
@@ -18,7 +18,7 @@ export const login = (params: ILogin, callback: () => void) => {
   }
 }
 
-export const registration = (params: ISignIn, callback: () => void) => {
+export const registration = (params: ISignUp, callback: () => void) => {
   return async () => {
     try {
       await axios.post('http://localhost:5000/auth/registration', params)
