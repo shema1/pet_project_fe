@@ -11,7 +11,7 @@ export const login = (params: ILogin, callback: () => void) => {
     try {
       const response = await axios.post('http://localhost:5000/auth/login', params)
       callback()
-      return dispatch({ type: AuthActionTypes.LOGIN, payload: response.data.access_token })
+      return dispatch({ type: AuthActionTypes.LOGIN, payload: response.data })
     } catch (error) {
       handleError(error)
     }

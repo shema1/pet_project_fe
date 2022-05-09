@@ -27,7 +27,13 @@ export enum AuthActionTypes {
 
 interface LoginAction {
   type: AuthActionTypes.LOGIN
-  payload: string
+  payload: { 
+    access_token:string, 
+    user: {
+      _id: string,
+      name: string,
+      email: string
+    }}
 }
 
 interface SignupAction {

@@ -1,8 +1,43 @@
 import { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect } from 'react';
 import MainLayout from '../../layouts/MainLayout';
+import { io } from "socket.io-client";
+import { useTypedSelector } from '../../hooks/useTypedSelector';
+const ENDPOINT = "http://localhost:5000/";
 
 const Chat: NextPage = () => {
+  const socket = io(ENDPOINT);
+
+  const { currentUser } = useTypedSelector(state => state.auth);
+
+  useEffect(() => {
+    console.log("work")
+    socket.on("newChat", data => {
+      console.log("newChat", data)
+    });
+
+    return () => {
+      socket.on("disconnect", () => {
+        console.log("disconnect")
+      })
+    }
+  }, []);
+
+  const onSend = () => {
+    socket.emit("chat",
+      {
+        messages: {
+          message: "test",
+          sender: currentUser._id,
+          recipient: "6278b1004bb55e7d6124a87e",
+          sendDate: "11111"
+        },
+        sender: "currentUser._id",
+        recipient: "6278b1004bb55e7d6124a87e"
+      }
+    )
+  }
+
   return (
     <MainLayout>
       <div className="main">
@@ -65,7 +100,7 @@ const Chat: NextPage = () => {
               <textarea name="message-to-send" id="message-to-send" placeholder="Type your message" rows={3}></textarea>
               <i className="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
               <i className="fa fa-file-image-o"></i>
-              <button>Send</button>
+              <button onClick={onSend}>Send</button>
             </div>
 
           </div>
