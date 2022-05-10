@@ -3,11 +3,14 @@ import { playerReducer } from "./playerReducer";
 import { HYDRATE } from "next-redux-wrapper";
 import { trackReducer } from "./trackReducer";
 import { authReducer } from "./authReducer";
+import { chatReducer } from "./chatReducer";
+
 
 export const rootReducer = combineReducers({
   player: playerReducer,
   track: trackReducer,
-  auth: authReducer
+  auth: authReducer,
+  chat: chatReducer
 })
 
 export const reducer = (state, action: AnyAction) => {

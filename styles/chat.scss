@@ -12,7 +12,6 @@ $gray: #92959E;
 .main {
   background: #C5DDEB;
   font: 14px/20px "Lato", Arial, sans-serif;
-  padding: 40px 0;
   color: white;
 }
 
@@ -20,11 +19,12 @@ $gray: #92959E;
   margin: 0 auto;
   width: 750px;
   background: #444753;
-  border-radius: 5px;
+  width: 100%;
+  display: flex;
 }
 
 .people-list {
-  width:260px;
+  width:360px;
   float: left;
   
   .search {
@@ -48,11 +48,8 @@ $gray: #92959E;
   
   ul {
     padding: 20px;
-    height: 770px;
+    // height: 770px;
  
-    
-    
-    
     li {
       padding-bottom: 20px;
     }
@@ -76,19 +73,21 @@ $gray: #92959E;
   }
   
 }
-
+ul {
+  list-style-type: none;
+}
 .chat {
-  width: 490px;
   float:left;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  
+  width: 100%;
   color: #434651;
   
   .chat-header {
     padding: 20px;
     border-bottom: 2px solid white;
+    min-height: 55px;
     
     img {
       float: left;
@@ -121,7 +120,7 @@ $gray: #92959E;
     padding: 30px 30px 20px;
     border-bottom: 2px solid white;
     overflow-y: scroll;
-    height: 575px;
+    height: 346px;
     
     .message-data {
       margin-bottom: 15px;
